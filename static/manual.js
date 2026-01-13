@@ -1,3 +1,8 @@
+const API_BASE_URL =
+  window.location.hostname === "localhost"
+    ? "http://127.0.0.1:5000"
+    : "https://timegenai-1.onrender.com";
+
 /* ---------- LOADING HELPERS ---------- */
 function startLoading(buttonId) {
   const btn = document.getElementById(buttonId);
@@ -24,9 +29,6 @@ function stopLoading(buttonId) {
 
   btn.disabled = false;
 }
-
-
-
 
 /* ---------- INIT ---------- */
 function loadSubjects() {
@@ -59,10 +61,7 @@ function loadSubjects() {
       </div>
     `;
 
-    // Assign faculty (MULTIPLE allowed)
     div.querySelector("button").onclick = () => showFaculty(i);
-
-    // Delete subject
     div.querySelector(".danger-small").onclick = () => deleteSubject(i);
 
     list.appendChild(div);
@@ -71,7 +70,7 @@ function loadSubjects() {
 
 /* ---------- FACULTY ---------- */
 function addFaculty() {
-  const name = document.getElementById("facultyInput").value.trim();  // Assuming ID is "facultyInput"
+  const name = document.getElementById("facultyInput").value.trim();
   if (!name) return;
 
   let faculty = JSON.parse(localStorage.getItem("faculty")) || [];
@@ -83,12 +82,12 @@ function addFaculty() {
 }
 
 function addFacultyFromURL() {
-  const url = document.getElementById("URLInput").value.trim();  // Assuming ID is "URLInput"
+  const url = document.getElementById("URLInput").value.trim();
   if (!url) return;
 
   startLoading("facultyImportBtn");
 
-  fetch("/api/faculty", {
+  fetch(`${API_BASE_URL}/api/faculty`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ url })
@@ -111,16 +110,16 @@ function addFacultyFromURL() {
 
 /* ---------- SUBJECT ---------- */
 function addSubject() {
-  const name = document.getElementById("subjectInput").value.trim();  // Assuming ID is "subjectInput"
+  const name = document.getElementById("subjectInput").value.trim();
   if (!name) return;
 
   let subjects = JSON.parse(localStorage.getItem("subjects")) || [];
   subjects.push({
     subject: name,
-    faculty: [],  // Array for multiple faculty
-    theory: 0,    // Hours (will be sent as theory_hours)
-    practical: 0, // Hours (will be sent as practical_hours)
-    tutorial: 0   // Hours (will be sent as tutorial_hours)
+    faculty: [],
+    theory: 0,
+    practical: 0,
+    tutorial: 0
   });
 
   localStorage.setItem("subjects", JSON.stringify(subjects));
@@ -129,7 +128,7 @@ function addSubject() {
 }
 
 function addSubjectsFromPDF() {
-  const file = document.getElementById("PDFInput").files[0];  // Assuming ID is "PDFInput"
+  const file = document.getElementById("PDFInput").files[0];
   if (!file) return;
 
   startLoading("subjectImportBtn");
@@ -137,7 +136,7 @@ function addSubjectsFromPDF() {
   const fd = new FormData();
   fd.append("pdf", file);
 
-  fetch("/api/syllabus-upload", {
+  fetch(`${API_BASE_URL}/api/syllabus-upload`, {
     method: "POST",
     body: fd
   })
@@ -159,9 +158,9 @@ function addSubjectsFromPDF() {
           subjects.push({
             subject: name,
             faculty: [],
-            theory: s.theory || 0,      // Hours
-            practical: s.practical || 0, // Hours
-            tutorial: s.tutorial || 0    // Hours
+            theory: s.theory || 0,
+            practical: s.practical || 0,
+            tutorial: s.tutorial || 0
           });
         }
       });
@@ -232,7 +231,6 @@ function goBack() {
 window.onload = loadSubjects;
 
 /* ---------- SEND TO BACKEND ---------- */
-/* ---------- SEND TO BACKEND ---------- */
 function sendDataToBackend() {
   const subjectsUI = JSON.parse(localStorage.getItem("subjects")) || [];
   const syllabusRaw = JSON.parse(localStorage.getItem("syllabusRaw")) || [];
@@ -243,11 +241,11 @@ function sendDataToBackend() {
     return;
   }
 
-  // Filter out subjects with no faculty (skip them entirely, no alert)
   const validSubjectsUI = subjectsUI.filter(s => s.faculty.length > 0);
 
-  // Check for subjects with no hours (still alert, as hours are required)
-  const invalidSubjects = validSubjectsUI.filter(s => s.theory_hours === 0 && s.practical_hours === 0 && s.tutorial_hours === 0);
+  const invalidSubjects = validSubjectsUI.filter(
+    s => s.theory_hours === 0 && s.practical_hours === 0 && s.tutorial_hours === 0
+  );
   if (invalidSubjects.length > 0) {
     alert(`Some subjects have no hours assigned (theory, practical, or tutorial): ${invalidSubjects.map(s => s.subject).join(", ")}. Please assign hours before sending.`);
     return;
@@ -262,7 +260,7 @@ function sendDataToBackend() {
       lectureDuration: config.lectureDuration,
       practicalDuration: config.practicalDuration,
       labCount: config.labCount,
-     practicalBatches: config.practicalBatches || 1,
+      practicalBatches: config.practicalBatches || 1,
       lunchBreak: config.lunchBreak,
       shortBreak: config.shortBreak,
       shortBreakCount: config.shortBreakCount,
@@ -277,44 +275,41 @@ function sendDataToBackend() {
 
       return {
         subject: ui.subject,
-        faculty: ui.faculty,  // Array of faculty names
-
-        // Send hours (backend converts to periods)
+        faculty: ui.faculty,
         theory_hours: raw.theory_hours ?? 0,
-      practical_hours: raw.practical_hours ?? 0,
-      tutorial_hours: raw.tutorial_hours ?? 0
+        practical_hours: raw.practical_hours ?? 0,
+        tutorial_hours: raw.tutorial_hours ?? 0
       };
     })
   };
 
-  fetch("/api/process-data", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(payload)
-})
-  .then(res => res.json())
-  .then(data => {
-    console.log("Backend response:", data);
-
-    if (data.status === "error") {
-      alert(`Timetable generation failed: ${data.message}`);
-      return;
-    }
-
-    if (data.redirect) {
-      // THIS is the missing step
-      window.location.href = data.redirect;
-      return;
-    }
-
-    alert("Timetable generated, but no redirect provided.");
+  fetch(`${API_BASE_URL}/api/process-data`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
   })
-  .catch(err => {
-    console.error(err);
-    alert("Failed to send data or generate timetable");
-  });
+    .then(res => res.json())
+    .then(data => {
+      console.log("Backend response:", data);
 
+      if (data.status === "error") {
+        alert(`Timetable generation failed: ${data.message}`);
+        return;
+      }
+
+      if (data.redirect) {
+        window.location.href = data.redirect;
+        return;
+      }
+
+      alert("Timetable generated, but no redirect provided.");
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Failed to send data or generate timetable");
+    });
 }
+
 function goChatBot() {
   window.location.href = "/chatbot";
 }
