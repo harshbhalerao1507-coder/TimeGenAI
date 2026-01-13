@@ -13,7 +13,10 @@ from tt import (
     convert_hours_to_periods
 )
 
+from flask_cors import CORS  # <-- ADDED (required)
+
 app = Flask(__name__)
+CORS(app)  # <-- ADDED (required)
 
 # -------------------------
 # GLOBAL STORAGE (NO SESSION)
@@ -197,11 +200,9 @@ USER QUESTION:
 """
 
     url = (
-    "https://generativelanguage.googleapis.com/v1beta/"
-    f"models/gemini-2.5-flash:generateContent?key={GEMINI_API_KEY}"
-)
-
-
+        "https://generativelanguage.googleapis.com/v1beta/"
+        f"models/gemini-2.5-flash:generateContent?key={GEMINI_API_KEY}"
+    )
 
     payload = {
         "contents": [
@@ -220,11 +221,9 @@ USER QUESTION:
         print("REQUEST ERROR:", e)
         return "Failed to contact Gemini."
 
-    # DEBUG PRINT (keep this for now)
     print("RAW GEMINI RESPONSE:")
     print(json.dumps(data, indent=2))
 
-    # HANDLE ERRORS SAFELY
     if "candidates" not in data:
         return "Gemini API error. Check server logs."
 
@@ -235,7 +234,7 @@ USER QUESTION:
 
 
 # -------------------------
-# CHAT API (CALLED BY HTML)
+# CHAT API
 # -------------------------
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -249,7 +248,8 @@ def chat():
     return jsonify({"reply": reply})
 
 # -------------------------
-# RUN
+# RUN (RENDER SAFE)
 # -------------------------
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
