@@ -1,7 +1,7 @@
 const API_BASE_URL =
   window.location.hostname === "localhost"
     ? "http://127.0.0.1:5000"
-    : "https://timegenai-1.onrender.com";
+    : "https://timegenai-4.onrender.com";
 
 /* ---------- LOADING HELPERS ---------- */
 function startLoading(buttonId) {
@@ -313,3 +313,4 @@ function sendDataToBackend() {
 function goChatBot() {
   window.location.href = "/chatbot";
 }
+
