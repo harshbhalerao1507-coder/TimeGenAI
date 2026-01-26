@@ -25,7 +25,7 @@ The Timetable Generator provides an intelligent automated system where:
   - Extracts subjects, credits, and structure directly from syllabus PDFs  
   - Currently supports **SPPU (Savitribai Phule Pune University) syllabus format**  
   - Designed to be extensible for other universities in future updates
-    ![Syllabus Extraction Preview](assets/Screenshot(98).png)
+    ![Syllabus Extraction Preview](assets/Screenshot (98).png)
 
 - 👨‍🏫 **Faculty data extraction from college websites**  
   - Automatically fetches faculty names and details from official college faculty pages  
