@@ -21,17 +21,23 @@ The Timetable Generator provides an intelligent automated system where:
 ---
 
 ## 🌟 Main Highlights
-- 📄 **Automatic syllabus extraction from PDF files**  
-  - Extracts subjects, credits, and structure directly from syllabus PDFs  
-  - Currently supports **SPPU (Savitribai Phule Pune University) syllabus format**  
-  - Designed to be extensible for other universities in future updates
-    ![Syllabus Extraction Preview](assets/Screenshot (98).png)
 
-- 👨‍🏫 **Faculty data extraction from college websites**  
-  - Automatically fetches faculty names and details from official college faculty pages  
-  - Currently works for **specific colleges with supported page structures**  
-  - Planned improvements for broader compatibility across institutions  
-     ![Syllabus Extraction Preview](assets/Screenshot(99).png)
+### 📄 Automatic syllabus extraction from PDF files
+- Extracts subjects, credits, and structure directly from syllabus PDFs  
+- Currently supports **SPPU (Savitribai Phule Pune University) syllabus format**  
+- Designed to be extensible for other universities in future updates  
+
+![Syllabus Extraction Preview](assets/Screenshot%20(98).png)
+
+---
+
+### 👨‍🏫 Faculty data extraction from college websites
+- Automatically fetches faculty names and details from official college faculty pages  
+- Currently works for **specific colleges with supported page structures**  
+- Planned improvements for broader compatibility across institutions  
+
+![Faculty Extraction Preview](assets/Screenshot%20(99).png)
+
 ---
 
 ## ✨ Key Features
@@ -76,24 +82,25 @@ PDF Generator
 
 ---
 
-
 ## 📸 Screenshots
 
 ### 🏠 Homepage
-![Homepage](assets/Screenshot(95).png)
+![Homepage](assets/Screenshot%20(95).png)
 
 ### 📊 Timetable Dashboard
-![Timetable Dashboard](assets/Screenshot(96).png)
+![Timetable Dashboard](assets/Screenshot%20(96).png)
 
 ### 🧮 Timetable Generation Interface
-![Timetable Generation](assets/Screenshot(98).png)
+![Timetable Generation](assets/Screenshot%20(98).png)
 
 ### 🤖 AI Chatbot Interface
-![AI Chatbot](assets/Screenshot(102).png)
+![AI Chatbot](assets/Screenshot%20(102).png)
 
 ### 📄 Generated Timetable (PDF Preview)
-![PDF Preview](assets/Screenshot(100).png)
+![PDF Preview](assets/Screenshot%20(100).png)
+
 ---
+
 ## 👥 Team
 - Ayush Pingat  
 - Harsh Bhalerao  
