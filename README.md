@@ -27,7 +27,7 @@ The Timetable Generator provides an intelligent automated system where:
 - Currently supports **SPPU (Savitribai Phule Pune University) syllabus format**  
 - Designed to be extensible for other universities in future updates  
 
-![Syllabus Extraction Preview](assets/Screenshot%20(98).png)
+![Syllabus Extraction Preview](assets/syllabus_extraction.png)
 
 ---
 
@@ -36,7 +36,7 @@ The Timetable Generator provides an intelligent automated system where:
 - Currently works for **specific colleges with supported page structures**  
 - Planned improvements for broader compatibility across institutions  
 
-![Faculty Extraction Preview](assets/Screenshot%20(99).png)
+![Faculty Extraction Preview](assets/faculty_extraction.png)
 
 ---
 
@@ -85,19 +85,19 @@ PDF Generator
 ## 📸 Screenshots
 
 ### 🏠 Homepage
-![Homepage](assets/Screenshot%20(95).png)
+![Homepage](assets/homepage.png)
 
 ### 📊 Timetable Dashboard
-![Timetable Dashboard](assets/Screenshot%20(96).png)
+![Timetable Dashboard](assets/timetable_dashboard.png)
 
 ### 🧮 Timetable Generation Interface
-![Timetable Generation](assets/Screenshot%20(98).png)
+![Timetable Generation](assets/timetable_generation_interface.png)
 
 ### 🤖 AI Chatbot Interface
-![AI Chatbot](assets/Screenshot%20(102).png)
+![AI Chatbot](assets/chatbot.png)
 
 ### 📄 Generated Timetable (PDF Preview)
-![PDF Preview](assets/Screenshot%20(100).png)
+![Generated Timetable](assets/generated_timetables.png)
 
 ---
 
